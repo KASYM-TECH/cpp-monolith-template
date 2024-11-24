@@ -1,19 +1,20 @@
 // Copyright 2024 dim0n4eg
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <windows.h>
 #include <time.h>
 #include <unistd.h>
-#include <stdio.h>
+#include <windows.h>
+
 #include <cstdio>
 
 #define MAX_ARGS 64
 #define BUFFER_SIZE 4096
 
-void execute_cd(char *path, HANDLE hOut, HANDLE hErr) {
+void execute_cd(char* path, HANDLE hOut, HANDLE hErr) {
   if (SetCurrentDirectory(path) == 0) {
-    const char *errorMsg = "Error: Cannot change directory.\n";
+    const char* errorMsg = "Error: Cannot change directory.\n";
     DWORD bytesWritten;
     WriteFile(hErr, errorMsg, strlen(errorMsg), &bytesWritten, NULL);
     return;
@@ -25,7 +26,7 @@ void execute_ls(HANDLE hOut, HANDLE hErr) {
   HANDLE hFind = FindFirstFile("*", &findFileData);
 
   if (hFind == INVALID_HANDLE_VALUE) {
-    const char *errorMsg = "Error: Unable to list directory.\n";
+    const char* errorMsg = "Error: Unable to list directory.\n";
     DWORD bytesWritten;
     WriteFile(hErr, errorMsg, strlen(errorMsg), &bytesWritten, NULL);
     return;
@@ -43,7 +44,7 @@ void execute_ls(HANDLE hOut, HANDLE hErr) {
   FindClose(hFind);
 }
 
-void execute_program(char *program, char **args, HANDLE hIn, HANDLE hOut,
+void execute_program(char* program, char** args, HANDLE hIn, HANDLE hOut,
                      HANDLE hErr) {
   STARTUPINFO si;
   PROCESS_INFORMATION pi;
@@ -77,11 +78,10 @@ void execute_program(char *program, char **args, HANDLE hIn, HANDLE hOut,
   CloseHandle(pi.hThread);
 }
 
-
-void execute_command(char *command, HANDLE hIn, HANDLE hOut, HANDLE hErr) {
-  char *args[MAX_ARGS];
-  char *saveptr;
-  char *token = strtok_r(command, " ", &saveptr);
+void execute_command(char* command, HANDLE hIn, HANDLE hOut, HANDLE hErr) {
+  char* args[MAX_ARGS];
+  char* saveptr;
+  char* token = strtok_r(command, " ", &saveptr);
   int argCount = 0;
   while (token != NULL) {
     args[argCount++] = token;
@@ -102,7 +102,7 @@ void execute_command(char *command, HANDLE hIn, HANDLE hOut, HANDLE hErr) {
   }
 }
 
-HANDLE open_file(char *filename, DWORD accessMode, DWORD creationDisposition) {
+HANDLE open_file(char* filename, DWORD accessMode, DWORD creationDisposition) {
   SECURITY_ATTRIBUTES sa;
   sa.nLength = sizeof(sa);
   sa.lpSecurityDescriptor = NULL;
@@ -117,9 +117,9 @@ HANDLE open_file(char *filename, DWORD accessMode, DWORD creationDisposition) {
   return fileHandle;
 }
 
-void parse_redirection(char *command, HANDLE *hOut, HANDLE *hErr) {
-  char *redirect;
-  char *filename;
+void parse_redirection(char* command, HANDLE* hOut, HANDLE* hErr) {
+  char* redirect;
+  char* filename;
 
   while ((redirect = strpbrk(command, "12>"))) {
     int type_of_redirect = 0;
@@ -142,7 +142,7 @@ void parse_redirection(char *command, HANDLE *hOut, HANDLE *hErr) {
       filename++;
     }
 
-    char *end = filename;
+    char* end = filename;
     while (*end && !isspace(*end)) {
       end++;
     }
@@ -166,17 +166,17 @@ void parse_redirection(char *command, HANDLE *hOut, HANDLE *hErr) {
   }
 }
 
-void parse_command(char *input, char **commands, int *cmdCount) {
-  char *saveptr;
-  char *token = strtok_r(input, "|", &saveptr);
+void parse_command(char* input, char** commands, int* cmdCount) {
+  char* saveptr;
+  char* token = strtok_r(input, "|", &saveptr);
   while (token != NULL) {
     commands[(*cmdCount)++] = token;
     token = strtok_r(NULL, "|", &saveptr);
   }
 }
 
-void execute_pipeline(char *input) {
-  char *commands[64];
+void execute_pipeline(char* input) {
+  char* commands[64];
   int cmdCount = 0;
   parse_command(input, commands, &cmdCount);
 
@@ -231,11 +231,6 @@ void print_prompt() {
   }
 }
 
-void execute_pipeline(const char *input) {
-  // Здесь реализуется выполнение команды
-  printf("Выполнение команды: %s\n", input);
-}
-
 int main() {
   char input[1024];
 
@@ -251,7 +246,6 @@ int main() {
     }
 
     execute_pipeline(input);
-
   }
 
   return 0;

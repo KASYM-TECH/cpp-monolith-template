@@ -18,18 +18,17 @@ struct Edge {
 std::vector<std::vector<Edge>> createRandomGraph(int numNodes, int maxWeight) {
   std::vector<std::vector<Edge>> graph(numNodes);
 
-  // Initialize random number generators
   std::mt19937 rng(
-      static_cast<unsigned int>(std::time(nullptr)));  // Mersenne Twister RNG
+      static_cast<unsigned int>(std::time(nullptr)));
   std::uniform_int_distribution<int> coinFlip(0,
-                                              1);  // For 0 or 1 random values
+                                              1);
   std::uniform_int_distribution<int> weightDist(
-      1, maxWeight);  // For weights in range [1, maxWeight]
+      1, maxWeight);
 
   for (int i = 0; i < numNodes; ++i) {
     for (int j = 0; j < numNodes; ++j) {
-      if (i != j && coinFlip(rng)) {   // Randomly decide to add an edge
-        int weight = weightDist(rng);  // Generate a random weight
+      if (i != j && coinFlip(rng)) {
+        int weight = weightDist(rng);
         graph[i].push_back({j, weight});
       }
     }

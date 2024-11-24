@@ -1,3 +1,5 @@
+// Copyright 2024 KASYM-TECH
+
 #include <stdio.h>
 #include <windows.h>
 

@@ -1,4 +1,4 @@
-// Copyright 2024 dim0n4eg
+// Copyright 2024 KASYM-TECH
 
 #include <stdio.h>
 #include <stdlib.h>

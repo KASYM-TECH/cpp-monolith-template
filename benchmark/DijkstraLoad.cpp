@@ -18,12 +18,9 @@ struct Edge {
 std::vector<std::vector<Edge>> createRandomGraph(int numNodes, int maxWeight) {
   std::vector<std::vector<Edge>> graph(numNodes);
 
-  std::mt19937 rng(
-      static_cast<unsigned int>(std::time(nullptr)));
-  std::uniform_int_distribution<int> coinFlip(0,
-                                              1);
-  std::uniform_int_distribution<int> weightDist(
-      1, maxWeight);
+  std::mt19937 rng(static_cast<unsigned int>(std::time(nullptr)));
+  std::uniform_int_distribution<int> coinFlip(0, 1);
+  std::uniform_int_distribution<int> weightDist(1, maxWeight);
 
   for (int i = 0; i < numNodes; ++i) {
     for (int j = 0; j < numNodes; ++j) {

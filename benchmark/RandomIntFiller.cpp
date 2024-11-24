@@ -4,6 +4,7 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>

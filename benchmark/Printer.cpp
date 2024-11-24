@@ -1,6 +1,7 @@
 // Copyright 2024 KASYM-TECH
 
 #include <windows.h>
+#include <cstdio>
 
 #include <iostream>
 #include <string>

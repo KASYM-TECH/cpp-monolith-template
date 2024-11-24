@@ -2,9 +2,9 @@
 
 #include <windows.h>
 
+#include <algorithm>
 #include <cstdlib>
 #include <ctime>
-#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>

@@ -2,9 +2,11 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <functional>
 #include <iostream>
 #include <limits>
 #include <queue>
+#include <random>
 #include <vector>
 
 const int INF = std::numeric_limits<int>::max();
@@ -15,12 +17,19 @@ struct Edge {
 
 std::vector<std::vector<Edge>> createRandomGraph(int numNodes, int maxWeight) {
   std::vector<std::vector<Edge>> graph(numNodes);
-  srand(time(nullptr));
+
+  // Initialize random number generators
+  std::mt19937 rng(
+      static_cast<unsigned int>(std::time(nullptr)));  // Mersenne Twister RNG
+  std::uniform_int_distribution<int> coinFlip(0,
+                                              1);  // For 0 or 1 random values
+  std::uniform_int_distribution<int> weightDist(
+      1, maxWeight);  // For weights in range [1, maxWeight]
 
   for (int i = 0; i < numNodes; ++i) {
     for (int j = 0; j < numNodes; ++j) {
-      if (i != j && rand() % 2) {
-        int weight = rand() % maxWeight + 1;
+      if (i != j && coinFlip(rng)) {   // Randomly decide to add an edge
+        int weight = weightDist(rng);  // Generate a random weight
         graph[i].push_back({j, weight});
       }
     }

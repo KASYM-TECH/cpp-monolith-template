@@ -1,9 +1,9 @@
 // Copyright 2024 KASYM-TECH
 
 #include <windows.h>
-#include <string>
 
 #include <iostream>
+#include <string>
 
 void deleteFile(const std::string& filename) {
   if (DeleteFileA(filename.c_str())) {

@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <windows.h>
+
 #include <cstdio>
 
 #define BUFSIZE 4096

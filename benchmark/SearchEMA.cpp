@@ -27,7 +27,7 @@ void searchIntegerInFile(const std::string& filename, int target) {
   }
 
   const size_t bufferIntCount = BLOCK_SIZE / sizeof(int);
-  int* buffer = (int*)_aligned_malloc(BLOCK_SIZE, 4096);
+  int* buffer = reinterpret_cast<int*>(_aligned_malloc(BLOCK_SIZE, 4096));
   if (!buffer) {
     std::cerr << "Failed to allocate memory for the buffer.\n";
     CloseHandle(file);
